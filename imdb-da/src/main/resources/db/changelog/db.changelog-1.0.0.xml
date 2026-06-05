@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <property dbms="h2" name="timestampDataType" value="TIMESTAMP"/>
+    <property dbms="h2" name="defaultDateTimeComputed" value="CURRENT_TIMESTAMP"/>
+
+    <changeSet id="initial_db.01" context="initial" author="hamid">
+        <comment>create the title table</comment>
+        <createTable tableName="title" remarks="Table to store title">
+            <column name="id" type="varchar(100)" remarks="The unique identifier of the title">
+            </column>
+            <column name="title_type" type="varchar(100)" remarks="The title type of the title">
+                <constraints nullable="false"/>
+            </column>
+            <column name="original_title" type="varchar(500)" remarks="The original title of the title">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_year" type="int" remarks="The start year of the title">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <comment>create the person table</comment>
+        <createTable tableName="person" remarks="Table to store person">
+            <column name="unique_identifier" type="varchar(100)" remarks="The unique identifier of the person">
+            </column>
+            <column name="primary_name" type="varchar(500)" remarks="The primary name of the person">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_year" type="int" remarks="The birth year of the person">
+                <constraints nullable="true"/>
+            </column>
+            <column name="death_year" type="int" remarks="The death year of the person">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <comment>create the rating table</comment>
+        <createTable tableName="rating" remarks="Table to store rating">
+            <column name="title_id" type="varchar(100)" remarks="The title identifier">
+                <constraints nullable="false"/>
+            </column>
+            <column name="average_rating" type="number" remarks="The average rating of the rating">
+                <constraints nullable="false"/>
+            </column>
+            <column name="num_votes" type="int" remarks="The number of votes the rating">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="title_genre" remarks="Table to store title genres">
+            <column name="title_id" type="varchar(100)" remarks="The title identifier">
+                <constraints nullable="false"/>
+            </column>
+            <column name="genre" type="varchar(100)" remarks="The genre of the title genre">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
