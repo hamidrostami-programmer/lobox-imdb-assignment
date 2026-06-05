@@ -34,8 +34,8 @@ public class ImdbImportDatasetServiceImpl implements ImdbImportDatasetService {
     }
 
     private void createIndexes() {
-        jdbcTemplate.batchUpdate("create index idx_title_id on TITLE(ID);");
-        jdbcTemplate.batchUpdate("create index idx_rating_title_id on RATING(TITLE_ID);");
+        jdbcTemplate.batchUpdate("CREATE INDEX IF NOT EXISTS idx_title_id ON TITLE(ID);");
+        jdbcTemplate.batchUpdate("CREATE INDEX IF NOT EXISTS idx_rating_title_id ON RATING(TITLE_ID);");
     }
 
 }
