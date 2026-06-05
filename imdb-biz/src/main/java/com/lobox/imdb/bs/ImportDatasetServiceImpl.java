@@ -4,6 +4,8 @@ import com.lobox.imdb.bs.exception.DownloadException;
 import com.lobox.imdb.bs.exception.ReadDatasetException;
 import com.lobox.imdb.common.utils.FileUtility;
 import com.lobox.imdb.si.ImportDatasetService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -24,6 +26,9 @@ import java.util.zip.GZIPInputStream;
 @Service
 public abstract class ImportDatasetServiceImpl implements ImportDatasetService {
 
+
+    protected final Log LOGGER = LogFactory.getLog(this.getClass());
+
     private static final int BATCH_SIZE = 5000;
 
     private static final String IMDB_URL = "https://datasets.imdbws.com/";
@@ -35,6 +40,7 @@ public abstract class ImportDatasetServiceImpl implements ImportDatasetService {
             try {
                 FileUtility.downloadFile(IMDB_URL, getFileName(), getFileName());
             } catch (IOException | InterruptedException e) {
+                LOGGER.error(e.getMessage(), e);
                throw new DownloadException();
             }
         }
@@ -59,6 +65,7 @@ public abstract class ImportDatasetServiceImpl implements ImportDatasetService {
                 persistBatch(batch);
             }
         } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new ReadDatasetException();
         }
     }
